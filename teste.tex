@@ -1,0 +1,226 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,graphicx,indentfirst}
+
+\usepackage[brazil]{babel}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{enumerate}
+ 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+ 
+\lstset{
+  language=Python,                
+  basicstyle=\footnotesize,           
+  numbers=left,                   
+  numberstyle=\tiny\color{gray},  
+  stepnumber=2,                             
+  numbersep=5pt,                  
+  backgroundcolor=\color{white},    
+  showspaces=false,               
+  showstringspaces=false,         
+  showtabs=false,                 
+  frame=single,                   
+  rulecolor=\color{black},        
+  tabsize=2,                      
+  captionpos=b,                   
+  breaklines=true,              
+  breakatwhitespace=false,        
+  title=\lstname,                               
+  keywordstyle=\color{blue},          
+  commentstyle=\color{dkgreen},       
+  stringstyle=\color{mauve},     
+}
+
+\title{Lista 4 - MAE0399 - Análise de Dados e Simulação}
+\author{George Othon - NUSP 10349978 \\ Guilherme Gomes - NUSP 11810196 \\ Espedito Ferreira Alves - NUSP 10786552}
+\date{Julho 2021}
+\\[1cm]
+
+\begin{document}
+
+\maketitle
+
+\begin{flushleft}
+\textbf{Exercício} 2
+\\[0.5cm]
+\end{flushleft}
+
+\begin{enumerate}
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.35]{Imagens/Exercício 2A.png}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.35]{Imagens/Exercício 2B.png}
+        \label{fig:my_label}
+    \end{figure}
+    
+\end{enumerate}
+
+
+\newpage
+\begin{flushleft}
+\textbf{Exercício} 4
+\\[0.5cm]
+\end{flushleft}
+Considere o arquivo de dados Weekly que faz parte do pacote ISLR
+do R . Esses dados possuem 1089 porcentagens de retornos semanais durante
+21 anos (de 1990 até 2010)
+
+    \begin{enumerate}[a.]
+    \item Faça alguns grácos resumos dos dados. Você consegue identificar algum padrão? Explique
+    
+    \newpage
+    %%%Lag1
+    \begin{figure}[h]
+    
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag1 -down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag1 -up.jpeg}}
+    \caption{Lag1}
+    \end{figure}
+    
+    %%%Lag2
+    \begin{figure}[h]
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag2 -down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag2 -up.jpeg}}
+    \caption{Lag2}
+    \end{figure}
+    
+    \newpage
+    %%%Lag3
+     \begin{figure}[h]
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag3 -down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag3 -up.jpeg}}
+    \caption{Lag3}
+    \end{figure}
+    
+    %%%lag4
+     \begin{figure}[h]
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag4 -down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag4 -up.jpeg}}
+    \caption{Lag4}
+    \end{figure}
+    
+    \newpage
+    %%%Lag5
+     \begin{figure}[h]
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag5 -down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/lag5 -up.jpeg}}
+    \caption{Lag5}
+    \end{figure}
+    
+     %%%Volume
+     \begin{figure}[h]
+    \center
+    \subfigure{\includegraphics[width=5cm]{Imagens/volume-down.jpeg}}
+    \qquad
+    \subfigure{\includegraphics[width=5cm]{Imagens/volume-up.jpeg}}
+    \caption{volume}
+    \end{figure}
+     \end{enumerate}
+     
+
+Quando comparamos a distribuição dos lags e do volume quando separado por classe (Up e Down) apenas no Lag2 podemos observar uma pequena diferença,o que nos da indícios de que o preditor deve explicar o target um pouco melhor que as outras variáveis, o que é contraintuitivo, já que o Lag2 representa a cotação duas semanas atrás e o Lag1 (cotação da semana anterior) parece explicar menos.\\
+    
+\newpage
+\begin{enumerate}[b.]
+    \item  Ajuste um modelo de regressão logística aos dados completos considerando Direction como variável resposta e como preditores as cinco variáveis lag mais volume. Use a função summary para apresentar os resultados.
+    Quais preditores são estatisticamente significantes? Por que? Especlique as hipóteses que estão sendo testadas.
+
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4BCodigo.png}
+        \caption{Código}
+        \label{fig:my_label}
+    \end{figure}
+    
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4Bsummary.png}
+        \caption{Summary}
+        \label{fig:my_label}
+    \end{figure}
+
+\\
+Queremos testar a hipótese de que todos os parâmetros são nulos, e ao observar o p-valor, considerando um nível de significância de 5\%, temos o parâmetro $\beta_2$ que acompanha o preditor Lag2 estatisticamente significante com probabilidade $0.02$, logo, rejeitamos a hipótese de que $\beta_2 = 0$, e para os demais $\beta$s não podemos rejeitar a hipótese de que são nulos (Para $\beta_0$ podemos rejeitar a hipóteses de que $\beta_0 = 0$, pois o p-valor é bem menor que 5\%. 
+
+
+\newpage
+    \begin{enumerate}[c.]
+        \item Obtenha a matriz de classificação (confusion matrix), a sensibilidade, a especificidade $p_c$ = 0.5.
+        Comente os resultados.
+        
+        \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4Csummary.png}
+        \caption{Summary}
+        \label{fig:my_label}
+        \end{figure}
+        
+        \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.4]{Imagens/4Cconfusion_matrix.png}
+        \caption{Matrix de Confusão}
+        \label{fig:my_label}
+        \end{figure}
+        
+    Para o limiar $p_c=0.5$ o modelo tem uma acurácia de 0.56 (fração do total de predições corretas), tem uma especificidade de 0.92, ou seja, o modelo prevê corretamente boa parte das informações 
+    
+    \end{enumerate}
+    
+    
+    
+\newpage
+
+    \begin{enumerate}[d.]
+        \item Ajuste agora um modelo de regressão logística considerando apenas um período de treinamento, de 1990 a 2008. Considere como preditor apenas a variável lag2. Use a função summary para apresentar e analisar os resultados. Considerando como amostra de teste os anos seguintes (2009 e 2010), obtenha a matriz de classificação (confusion matrix) , a sensibilidade,a especificidade e a fração total de predições corretas.
+        \\[0.6cm]
+     \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4DCódigo.png}
+        \caption{Código}
+        \label{fig:my_label}
+        \end{figure}
+        
+        \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4Dsummary.png}
+        \caption{Summary}
+        \label{fig:my_label}
+        \end{figure}
+        
+        \begin{figure}[htb]
+        \centering
+        \includegraphics[scale=0.5]{Imagens/4DConfusion_matrix.png}
+        \caption{Matrix de Confusão}
+        \label{fig:my_label}
+        \end{figure}
+        
+        Do modelo ajustado considerando \textit{Lag2} como preditor da variável resposta \textit{Direction}, podemos ver que o preditor é relevante para um teste com nível de signifiância de 5\%, pois o $p-valor$ vale 0.0417. Dessa forma, rejeitamos a hipótese nula de que $\beta = 0$. A reta ajustada e as probabilidades preditas são dadas por:
+    $$
+    logito(p(x_{Lag2}))} = 0.550465 + 0.014232x_{Lag2}
+    $$
+    $$
+    \widehat{p}(x_{Lag2}) = \frac{e^{0.550465 + 0.014232x_{Lag2}}}{1 + e^{0.550465 + 0.014232x_{Lag2}}}
+    $$
+    
+    Outra observação que podemos fazer é que a precisão nas predições aumentou, sendo agora 0.625, contra 0.5629 para o modelo no qual utilizamos mais de um preditor. Além disso, houve um aumento na sensibilidade (verdadeiro positivo), o que justifica a maior proporção de acerto nas predições.
+        \end{enumerate}
+    
+\end{document}
